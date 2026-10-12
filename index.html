@@ -5,10 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daniel Acosta</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        document.documentElement.setAttribute(
+          "data-theme",
+          stored === "light" ? "light" : "dark"
+        );
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 </head>
 
 <body>
   <header class="site-header">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">Light</button>
     <h1>Daniel Acosta</h1>
     <p class="tagline">SWE &amp; Math</p>
 
@@ -330,6 +344,34 @@
       <p>Feel free to reach out:</p>
       <ul class="contact-links">
         <li>Email: <a href="mailto:daniel.bg.acosta@gmail.com">daniel.bg.acosta@gmail.com</a></li>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById("theme-toggle");
+
+      function render() {
+        var isDark = root.getAttribute("data-theme") !== "light";
+        btn.textContent = isDark ? "Light" : "Dark";
+        btn.setAttribute(
+          "aria-label",
+          isDark ? "Switch to light mode" : "Switch to dark mode"
+        );
+        btn.setAttribute("aria-pressed", String(isDark));
+      }
+
+      render();
+
+      btn.addEventListener("click", function () {
+        var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+        root.setAttribute("data-theme", next);
+        try {
+          localStorage.setItem("theme", next);
+        } catch (e) {}
+        render();
+      });
+    })();
+  </script>
         <li>University: <a href="mailto:daniel.acosta@uwaterloo.ca">daniel.acosta@uwaterloo.ca</a></li>
         <li>GitHub: <a href="https://github.com/DAcosta322">github.com/DAcosta322</a></li>
         <li>LinkedIn: <a href="https://www.linkedin.com/in/daniel-acosta-0bb966333/">www.linkedin.com/in/daniel-acosta-0bb966333</a></li>
